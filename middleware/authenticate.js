@@ -5,7 +5,7 @@ const { User } = require('../models');
 
 const { SECRET_KEY } = process.env;
 
-const authenticate = async (req, res, next) => {
+const authenticate = async (req, _, next) => {
   try {
     const [bearer, token] = req.headers?.authorization.split(' ');
     if (bearer !== 'Bearer') {
@@ -14,6 +14,8 @@ const authenticate = async (req, res, next) => {
     const { id } = jwt.verify(token, SECRET_KEY);
 
     const user = await User.findById(id);
+    if (user.token !== token) throw new Error();
+
     req.user = user;
     next();
   } catch (error) {
