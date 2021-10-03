@@ -26,6 +26,10 @@ const userSchema = Schema(
       type: String,
       default: '',
     },
+    balance: {
+      type: Number,
+      default: 0,
+    },
   },
   { versionKey: false, timestamps: true },
 );
@@ -43,6 +47,7 @@ const userJoiSchema = Joi.object({
   password: Joi.string().min(6).required(),
   token: Joi.string(),
   avatarURL: Joi.string(),
+  balance: Joi.number(),
 });
 
 const User = model('user', userSchema);
