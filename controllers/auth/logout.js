@@ -1,3 +1,3 @@
-const logout = async () => {}
+const logout = async () => {};
 
-module.exports = logout
+module.exports = logout;

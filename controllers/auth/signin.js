@@ -1,3 +1,3 @@
-const login = async () => {}
+const login = async () => {};
 
-module.exports = login
+module.exports = login;
