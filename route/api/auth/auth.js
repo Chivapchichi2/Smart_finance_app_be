@@ -1,11 +1,20 @@
-const express = require('express')
-const router = express.Router()
-const ctrl = require('../../../controllers/auth')
+const express = require('express');
+const router = express.Router();
 
-router.post('/signup', ctrl.signup)
+const { userJoiSchema } = require('../../../models/user');
+const {
+  validation,
+  tryCatchWrapper,
+  authenticate,
+} = require('../../../middleware');
+const ctrl = require('../../../controllers/auth');
 
-router.post('/signin', ctrl.signin)
+const userValidationMiddleware = validation(userJoiSchema);
 
-router.get('/logout', ctrl.logout)
+router.post('/signup', userValidationMiddleware, tryCatchWrapper(ctrl.signup));
 
-module.exports = router
+router.post('/signin', ctrl.signin);
+
+router.get('/logout', ctrl.logout);
+
+module.exports = router;
