@@ -11,7 +11,11 @@ const create = async (email, password) => {
   return await newUser.save();
 };
 
+const updateToken = async (_id, token) =>
+  await User.findByIdAndUpdate(_id, { token });
+
 module.exports = {
   findByEmail,
   create,
+  updateToken,
 };

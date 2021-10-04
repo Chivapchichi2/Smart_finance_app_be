@@ -1,15 +1,16 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, SchemaTypes } = require('mongoose');
 const Joi = require('joi');
-const Category = require('../helpers/constants')
+const { Category, RequirementRules } = require('../helpers/constants');
 
 const ledgerSchema = Schema({
+  owner: { type: SchemaTypes.ObjectId, ref: 'user' },
   date: {
-    type: Number,
-    required: true,
+    type: String,
+    required: [true, RequirementRules.date],
   },
   description: {
     type: String,
-    required: true,
+    required: [true, RequirementRules.description],
   },
   category: {
     type: String,
@@ -25,17 +26,19 @@ const ledgerSchema = Schema({
       Category.hobby,
       Category.education,
       Category.others,
+      Category.incomes,
+      Category.additionalIncomes,
     ],
-    default: Category.others,
+    require: [true, RequirementRules.category],
   },
   value: {
     type: Number,
-    require: true,
-  }
+    require: [true, RequirementRules.value],
+  },
 });
 
 const ledgerJoiSchema = Joi.object({
-  date: Joi.number().required(),
+  date: Joi.string().required(),
   description: Joi.string().required(),
   category: Joi.string(),
   value: Joi.number().required(),

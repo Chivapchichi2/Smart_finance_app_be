@@ -14,4 +14,14 @@ const Category = {
   additionalIncomes: 'Дополнительные доходы'
 };
 
-module.exports = Category
+const RequirementRules = {
+  date: 'field date is required',
+  description: 'field description is required',
+  category: 'field category is required',
+  value: 'field value is required',
+};
+
+module.exports = {
+  Category,
+  RequirementRules,
+};
