@@ -7,6 +7,7 @@ const db = mongoose.connect(uriDb, {
   useUnifiedTopology: true,
 })
 
+//info about DB connection
 mongoose.connection.on('connected', () => {
   console.log('Connection open on mongodb')
 })
