@@ -6,12 +6,12 @@ const Category = {
   amusement: 'Развлечения',
   housewares: 'Всё для дома',
   technic: 'Техника',
-  сommunalExpenses: 'Коммуналка и связь',
+  communalExpenses: 'Коммуналка и связь',
   hobby: 'Спорт и хобби',
   education: 'Образование',
   others: 'Прочее',
   incomes: 'ЗП',
-  additionalIncomes: 'Дополнительные доходы'
+  additionalIncomes: 'Дополнительные доходы',
 };
 
 const RequirementRules = {

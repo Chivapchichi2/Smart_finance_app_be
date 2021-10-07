@@ -22,7 +22,7 @@ const ledgerSchema = Schema({
       Category.amusement,
       Category.housewares,
       Category.technic,
-      Category.сommunalExpenses,
+      Category.communalExpenses,
       Category.hobby,
       Category.education,
       Category.others,
@@ -35,6 +35,10 @@ const ledgerSchema = Schema({
     type: Number,
     require: [true, RequirementRules.value],
   },
+  expense: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const ledgerJoiSchema = Joi.object({
@@ -42,6 +46,7 @@ const ledgerJoiSchema = Joi.object({
   description: Joi.string().required(),
   category: Joi.string(),
   value: Joi.number().required(),
+  expense: Joi.boolean().default(true),
 });
 
 const Ledger = model('ledger', ledgerSchema);
