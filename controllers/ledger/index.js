@@ -1,9 +1,9 @@
-const add = require('./add');
-const remove = require('./remove');
-const getAll = require('./getAll');
+const addTransaction = require('./addTransaction');
+const removeTransaction = require('./removeTransaction');
+const getTransactionsByMonth = require('./getTransactionsByMonth');
 
 module.exports = {
-  add,
-  remove,
-  getAll,
+  addTransaction,
+  removeTransaction,
+  getTransactionsByMonth,
 };

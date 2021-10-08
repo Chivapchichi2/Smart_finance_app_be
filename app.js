@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use('/api/users', require('./route/api/auth'));
-// app.use('/api/ledger', require('./route/api/ledger'));
+app.use('/api/ledgers', require('./route/api/ledger'));
 
 app.use((_, res) => {
   res.status(404).json({ status: 'error', code: 404, message: 'Not found' });
