@@ -1,16 +1,22 @@
-const { Ledger } = require('../../models')
+const { Ledger } = require('../../models');
 
-const add = async (userId, body) => {
-  const result = await Ledger.create({ owner: userId, ...body });
-  return result;
-};
+//create transaction
+const add = async (userId, body) =>
+  await Ledger.create({
+    ...body,
+    monthDate: body.date.split('.').slice(1).join('.'),
+    owner: userId,
+  });
 
-const remove = async (userId, id) => {
-  const result = await Ledger.findOneAndRemove({ _id: id, owner: userId });
-  return result;
-};
+//delete transaction
+const remove = async id => await Ledger.findByIdAndRemove(id);
+
+//get transactions array by month
+const getByMonth = async (userId, date, expense) =>
+  await Ledger.find({ owner: userId, monthDate: date, expense });
 
 module.exports = {
   add,
   remove,
+  getByMonth,
 };

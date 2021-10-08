@@ -15,38 +15,32 @@ router.post(
   '/income',
   tryCatchWrapper(authenticate),
   ledgerValidationMiddleware,
-  tryCatchWrapper(ctrl.add),
+  tryCatchWrapper(ctrl.addTransaction),
 );
 
 router.post(
   '/expense',
   tryCatchWrapper(authenticate),
   ledgerValidationMiddleware,
-  tryCatchWrapper(ctrl.add),
+  tryCatchWrapper(ctrl.addTransaction),
 );
 
 router.delete(
-  '/income',
+  '/:id',
   tryCatchWrapper(authenticate),
-  tryCatchWrapper(ctrl.remove),
-);
-
-router.delete(
-  '/expense',
-  tryCatchWrapper(authenticate),
-  tryCatchWrapper(ctrl.remove),
+  tryCatchWrapper(ctrl.removeTransaction),
 );
 
 router.get(
-  '/income',
+  '/income/:date',
   tryCatchWrapper(authenticate),
-  tryCatchWrapper(ctrl.getAll),
+  tryCatchWrapper(ctrl.getTransactionsByMonth),
 );
 
 router.get(
-  '/expense',
+  '/expense/:date',
   tryCatchWrapper(authenticate),
-  tryCatchWrapper(ctrl.getAll),
+  tryCatchWrapper(ctrl.getTransactionsByMonth),
 );
 
 module.exports = router;
