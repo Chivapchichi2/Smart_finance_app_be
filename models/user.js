@@ -2,11 +2,13 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 
+const reportSchema = require('./report')
+
 //regular for email check
 const emailRegExp =
   /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?.)*(aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/;
 
-const userSchema = Schema(
+const userSchema = new Schema(
   {
     password: {
       type: String,
@@ -30,6 +32,14 @@ const userSchema = Schema(
     balance: {
       type: Number,
       default: 0,
+    },
+    expense: {
+      type: reportSchema,
+      default: {},
+    },
+    income: {
+      type: reportSchema,
+      default: {},
     },
     //with using 2-factor authentication
     // verify: {

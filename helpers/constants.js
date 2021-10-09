@@ -21,7 +21,13 @@ const RequirementRules = {
   value: 'field value is required',
 };
 
+const Messages = {
+  negativeBalance:
+    'Эта затрата сделает ваш баланс отрицательным. Пополните баланс внесением доходов, либо откоректируйте значение баланса вручную',
+};
+
 module.exports = {
   Category,
   RequirementRules,
+  Messages,
 };
