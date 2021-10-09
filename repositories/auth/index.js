@@ -6,8 +6,6 @@ const findByEmail = async email => await User.findOne({ email });
 
 const findByToken = async token => await User.findOne({ token });
 
-const getUser = async _id => await User.findById(_id);
-
 const create = async (email, password) => {
   const newUser = new User({ email });
   newUser.setPassword(password);
@@ -36,6 +34,5 @@ module.exports = {
   removeAccessToken,
   findByToken,
   updateBalance,
-  getUser,
   getCurrentUser,
 };

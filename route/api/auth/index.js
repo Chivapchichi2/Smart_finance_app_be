@@ -28,7 +28,7 @@ router.get(
 );
 
 router.patch(
-  '/',
+  '/balance',
   tryCatchWrapper(authenticate),
   tryCatchWrapper(ctrl.updateUserBalance),
 );
