@@ -3,6 +3,7 @@ const signin = require('./signin');
 const logout = require('./logout');
 const updateUserBalance = require('./updateBalance');
 const updateTransactionBalance = require('./updateTransactionBalance')
+const current = require('./current');
 
 module.exports = {
   signup,
@@ -10,4 +11,5 @@ module.exports = {
   logout,
   updateUserBalance,
   updateTransactionBalance,
+  current,
 };

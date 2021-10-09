@@ -16,6 +16,12 @@ router.post('/signup', userValidationMiddleware, tryCatchWrapper(ctrl.signup));
 router.post('/signin', userValidationMiddleware, tryCatchWrapper(ctrl.signin));
 
 router.get(
+  '/current',
+  tryCatchWrapper(authenticate),
+  tryCatchWrapper(ctrl.current),
+);
+
+router.get(
   '/logout',
   tryCatchWrapper(authenticate),
   tryCatchWrapper(ctrl.logout),

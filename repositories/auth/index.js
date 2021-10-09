@@ -24,6 +24,11 @@ const updateBalance = async (_id, balance) =>
 const removeAccessToken = async _id =>
   await User.findByIdAndUpdate(_id, { token: null });
 
+const getCurrentUser = async token =>
+  await User.findOne({
+    token,
+  });
+
 module.exports = {
   findByEmail,
   create,
@@ -32,4 +37,5 @@ module.exports = {
   findByToken,
   updateBalance,
   getUser,
+  getCurrentUser,
 };
