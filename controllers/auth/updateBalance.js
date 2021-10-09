@@ -1,3 +1,10 @@
-const updateBalance = () => {};
+const { updateBalance } = require('../../repositories/auth');
 
-module.exports = updateBalance;
+const updateUserBalance = async (req, res) => {
+  const result = await updateBalance(req.user._id, req.body.value);
+  res.status(201).json({
+    balance: result.balance
+  });
+};
+
+module.exports = updateUserBalance;

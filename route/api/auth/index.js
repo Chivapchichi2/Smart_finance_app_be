@@ -24,7 +24,7 @@ router.get(
 router.patch(
   '/',
   tryCatchWrapper(authenticate),
-  tryCatchWrapper(ctrl.updateBalance),
+  tryCatchWrapper(ctrl.updateUserBalance),
 );
 
 module.exports = router;
