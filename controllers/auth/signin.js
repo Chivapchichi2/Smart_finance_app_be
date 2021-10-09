@@ -18,11 +18,12 @@ const login = async (req, res) => {
   // }
 
   //create User token
-  const updateUser = await createUserToken(user, UserDB);
+  const { avatarURL, balance, token } = await createUserToken(user, UserDB);
 
   //send response to frontend
   res.json({
-    user: updateUser,
+    user: { email, avatarURL, balance },
+    token,
   });
 };
 

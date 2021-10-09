@@ -19,10 +19,16 @@ const updateToken = async (_id, token) =>
 const removeAccessToken = async _id =>
   await User.findByIdAndUpdate(_id, { token: null });
 
+const getCurrentUser = async token =>
+  await User.findOne({
+    token,
+  });
+
 module.exports = {
   findByEmail,
   create,
   updateToken,
   removeAccessToken,
   findByToken,
+  getCurrentUser,
 };
