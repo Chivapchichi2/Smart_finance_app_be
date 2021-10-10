@@ -35,6 +35,7 @@ const addTransaction = async (req, res) => {
       description: transaction.description,
       category: transaction.category,
       value: transaction.value,
+      _id: transaction._id,
     },
     balance: newBalance,
   });
