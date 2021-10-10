@@ -3,6 +3,7 @@ const signin = require('./signin');
 const logout = require('./logout');
 const updateUserBalance = require('./updateBalance');
 const current = require('./current');
+const googleAuth = require('./googleAuth');
 
 module.exports = {
   signup,
@@ -10,4 +11,5 @@ module.exports = {
   logout,
   updateUserBalance,
   current,
+  googleAuth,
 };
