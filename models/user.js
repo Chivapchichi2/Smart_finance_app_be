@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 
-const reportSchema = require('./report')
+const reportSchema = require('./report');
 
 //regular for email check
 const emailRegExp =
@@ -12,10 +12,8 @@ const userSchema = new Schema(
   {
     password: {
       type: String,
+      required: [true, 'Email is required'],
       minlength: 6,
-    },
-    googlePassword: {
-      type: String,
     },
     email: {
       type: String,
@@ -51,23 +49,16 @@ const userSchema = new Schema(
 userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
-userSchema.methods.setGooglePassword = function (password) {
-  this.googlePassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-};
 
 //compare user password by signin
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
-};
-userSchema.methods.compareGooglePassword = function (password) {
-  return bcrypt.compareSync(password, this.googlePassword);
 };
 
 //checked input data from frontend
 const userJoiSchema = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
   password: Joi.string().min(6),
-  googlePassword: Joi.string(),
   token: Joi.string(),
   verify: Joi.boolean(),
   avatarURL: Joi.string(),

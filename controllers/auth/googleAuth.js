@@ -1,4 +1,5 @@
 const { OAuth2Client } = require('google-auth-library');
+
 const { findByEmail } = require('../../repositories/auth');
 const createUserToken = require('../../helpers/createUserToken');
 const UserDB = require('../../repositories/auth');
@@ -18,7 +19,7 @@ const googleAuth = async (req, res) => {
 
   const existedUser = await findByEmail(email);
   if (existedUser) {
-    if (!existedUser.compareGooglePassword(sub)) {
+    if (!existedUser.comparePassword(sub)) {
       throw new BadRequest('Use your email and password');
     }
     //create User token
@@ -32,11 +33,10 @@ const googleAuth = async (req, res) => {
       user: { email, avatarURL, balance },
       token,
     });
-    return;
   }
 
   //create new user in DB
-  const newUser = await UserDB.create(email, '', picture, sub);
+  const newUser = await UserDB.create(email, sub, picture);
 
   const { avatarURL, balance, token } = await createUserToken(newUser, UserDB);
 

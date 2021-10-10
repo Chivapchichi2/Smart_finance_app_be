@@ -4,15 +4,9 @@ const findByEmail = async email => await User.findOne({ email });
 
 const findByToken = async token => await User.findOne({ token });
 
-const create = async (
-  email,
-  password = '',
-  avatarURL = '',
-  googlePassword = '',
-) => {
+const create = async (email, password = '', avatarURL = '') => {
   const newUser = new User({ email });
   newUser.setPassword(password);
-  newUser.setGooglePassword(googlePassword);
   newUser.avatarURL = avatarURL;
   return await newUser.save();
 };
