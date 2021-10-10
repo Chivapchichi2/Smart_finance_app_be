@@ -28,9 +28,9 @@ router.get(
 );
 
 router.patch(
-  '/',
+  '/balance',
   tryCatchWrapper(authenticate),
-  tryCatchWrapper(ctrl.updateBalance),
+  tryCatchWrapper(ctrl.updateUserBalance),
 );
 
 router.post('/google', tryCatchWrapper(ctrl.googleAuth));

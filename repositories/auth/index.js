@@ -20,6 +20,9 @@ const create = async (
 const updateToken = async (_id, token) =>
   await User.findByIdAndUpdate(_id, { token }, { new: true });
 
+const updateBalance = async (_id, balance) =>
+  await User.findByIdAndUpdate(_id, { balance }, { new: true });
+
 const removeAccessToken = async _id =>
   await User.findByIdAndUpdate(_id, { token: null });
 
@@ -34,5 +37,6 @@ module.exports = {
   updateToken,
   removeAccessToken,
   findByToken,
+  updateBalance,
   getCurrentUser,
 };
