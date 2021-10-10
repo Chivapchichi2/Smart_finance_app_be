@@ -10,8 +10,10 @@ const userSchema = Schema(
   {
     password: {
       type: String,
-      required: [true, 'Password is required'],
       minlength: 6,
+    },
+    googlePassword: {
+      type: String,
     },
     email: {
       type: String,
@@ -31,11 +33,6 @@ const userSchema = Schema(
       type: Number,
       default: 0,
     },
-    //with using 2-factor authentication
-    // verify: {
-    //   type: Boolean,
-    //   default: false,
-    // },
   },
   { versionKey: false, timestamps: true },
 );
@@ -44,16 +41,23 @@ const userSchema = Schema(
 userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
+userSchema.methods.setGooglePassword = function (password) {
+  this.googlePassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
 
 //compare user password by signin
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
+userSchema.methods.compareGooglePassword = function (password) {
+  return bcrypt.compareSync(password, this.googlePassword);
+};
 
 //checked input data from frontend
 const userJoiSchema = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(6),
+  googlePassword: Joi.string(),
   token: Joi.string(),
   verify: Joi.boolean(),
   avatarURL: Joi.string(),

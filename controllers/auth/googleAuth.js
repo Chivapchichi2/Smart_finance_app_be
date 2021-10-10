@@ -1,69 +1,50 @@
 const { OAuth2Client } = require('google-auth-library');
+const { findByEmail } = require('../../repositories/auth');
+const createUserToken = require('../../helpers/createUserToken');
+const UserDB = require('../../repositories/auth');
 
 const { CLIENT_ID } = process.env;
 const client = new OAuth2Client(CLIENT_ID);
 
-const { User } = require('../../models');
-
-const { users: service } = require('../../services');
-
-const googlelogin = (req, res) => {
+const googleAuth = async (req, res) => {
   const { tokenId } = req.body;
-  client
-    .verifyIdToken({
-      idToken: tokenId,
-      audience: CLIENT_ID,
-    })
-    .then(response => {
-      const { email_verified, name, email } = response.payload;
 
-      if (email_verified) {
-        User.findOne({ email }).exec((err, user) => {
-          const verifyToken = nanoid();
-          if (err) {
-            return res.status(400).json({ error: 'Something went wrong....' });
-          } else {
-            if (user) {
-              const token = jwt.sign({ id: user.id }, SECRET_KEY);
+  const {
+    payload: { email, sub, picture },
+  } = await client.verifyIdToken({
+    idToken: tokenId,
+    audience: CLIENT_ID,
+  });
 
-              const { id, email, verifyToken } = user;
+  const existedUser = await findByEmail(email);
+  if (existedUser) {
+    if (!existedUser.compareGooglePassword(sub)) {
+      throw new BadRequest('Use your email and password');
+    }
+    //create User token
+    const { avatarURL, balance, token } = await createUserToken(
+      existedUser,
+      UserDB,
+    );
 
-              service.update(user.id, { token });
-
-              res.json({
-                user: { id, token, email, verifyToken },
-              });
-            } else {
-              let password = email + SECRET_KEY;
-
-              let newUser = new User({
-                name,
-                email,
-                password,
-                verifyToken,
-              });
-              newUser.save((err, data) => {
-                if (err) {
-                  return res
-                    .status(400)
-                    .json({ error: 'Something went wrong....' });
-                }
-
-                const token = jwt.sign({ id: data.id }, SECRET_KEY);
-
-                const { id, email } = newUser;
-
-                service.update(data.id, { token });
-
-                res.json({
-                  user: { id, token, email },
-                });
-              });
-            }
-          }
-        });
-      }
+    //send response to frontend
+    return res.json({
+      user: { email, avatarURL, balance },
+      token,
     });
+    return;
+  }
+
+  //create new user in DB
+  const newUser = await UserDB.create(email, '', picture, sub);
+
+  const { avatarURL, balance, token } = await createUserToken(newUser, UserDB);
+
+  //send response to frontend
+  res.status(201).json({
+    user: { email, avatarURL, balance },
+    token,
+  });
 };
 
-module.exports = googlelogin;
+module.exports = googleAuth;
