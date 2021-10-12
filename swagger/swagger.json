@@ -14,7 +14,7 @@
    "servers": [
     {
       "url": "https://smart-finance-app-be.herokuapp.com",
-      "description": "The production API server"
+      "description": "API server"
     }
   ],
   "tags": [
@@ -862,7 +862,6 @@
       }
     },
       
-     
       "securitySchemes": {
         "Bearer": {
          "type": "http",
