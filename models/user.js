@@ -2,8 +2,6 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 
-const reportSchema = require('./report')
-
 //regular for email check
 const emailRegExp =
   /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?.)*(aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/;
@@ -33,19 +31,22 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
+    incomes: {
+      type: Schema.Types.Mixed,
+      default: {},
+    },
     expense: {
-      type: reportSchema,
+      type: Schema.Types.Mixed,
       default: {},
     },
-    income: {
-      type: reportSchema,
-      default: {},
+    handleExpense: {
+      type: Map,
+      of: String,
     },
-    //with using 2-factor authentication
-    // verify: {
-    //   type: Boolean,
-    //   default: false,
-    // },
+    handleIncomes: {
+      type: Map,
+      of: String,
+    },
   },
   { versionKey: false, timestamps: true },
 );
@@ -72,7 +73,13 @@ const userJoiSchema = Joi.object({
 
 const User = model('user', userSchema);
 
+const reportsMap = new User({
+  handleIncomes: {},
+  handleExpense: {},
+});
+
 module.exports = {
   User,
   userJoiSchema,
+  reportsMap,
 };

@@ -2,7 +2,15 @@ const { BadRequest } = require('http-errors');
 
 const { Messages } = require('../../helpers/constants');
 const { add } = require('../../repositories/ledger');
-const { updateBalance } = require('../../repositories/auth');
+const {
+  updateBalance,
+  updateIncome,
+  updateExpense,
+} = require('../../repositories/auth');
+const {
+  updateIncomeReport,
+  updateExpenseReport,
+} = require('../../helpers/updateReport');
 
 const addTransaction = async (req, res) => {
   const { value } = req.body;
@@ -27,6 +35,23 @@ const addTransaction = async (req, res) => {
 
   //update user balance
   await updateBalance(_id, newBalance);
+//------------------------------------------
+  //defined year and month from request
+  const month = req.body.date.split('.')[1];
+  const year = req.body.date.split('.')[2];
+
+  //check last user income
+  const lastIncome = req.user.incomes;
+  const lastExpense = req.user.expense;
+
+  const reports = expense
+    ? updateExpenseReport(year, month, value, lastExpense)
+    : updateIncomeReport(year, month, value, lastIncome);
+  
+  //send new income reports to user
+  const todo = expense
+    ? await updateExpense(_id, reports)
+    : await updateIncome(_id, reports);
 
   //response transaction to know result
   res.status(201).json({
@@ -36,8 +61,13 @@ const addTransaction = async (req, res) => {
       category: transaction.category,
       value: transaction.value,
       _id: transaction._id,
+      map: reports,
     },
     balance: newBalance,
+    ledger: {
+      incomes: todo.incomes,
+      expense: todo.expense,
+    },
   });
 };
 
