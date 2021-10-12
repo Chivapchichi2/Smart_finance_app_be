@@ -17,7 +17,8 @@ const login = async (req, res) => {
 
   //send response to frontend
   res.json({
-    user: { email, avatarURL, balance },
+    user: { email, avatarURL },
+    balance,
     token,
   });
 };

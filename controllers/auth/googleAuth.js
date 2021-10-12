@@ -30,7 +30,8 @@ const googleAuth = async (req, res) => {
 
     //send response to frontend
     return res.json({
-      user: { email, avatarURL, balance },
+      user: { email, avatarURL },
+      balance,
       token,
     });
   }
