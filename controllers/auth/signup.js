@@ -19,7 +19,8 @@ const signup = async (req, res) => {
 
   //send response to frontend
   res.status(201).json({
-    user: { email, avatarURL, balance },
+    user: { email, avatarURL },
+    balance,
     token,
   });
 };

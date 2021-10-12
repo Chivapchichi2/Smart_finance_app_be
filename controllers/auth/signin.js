@@ -12,17 +12,13 @@ const login = async (req, res) => {
     throw new BadRequest('Email or password is wrong');
   }
 
-  // //sandgrid verification by email confirm
-  // if (!user.verify) {
-  //   throw new NotFound('Email was not confirm');
-  // }
-
   //create User token
   const { avatarURL, balance, token } = await createUserToken(user, UserDB);
 
   //send response to frontend
   res.json({
-    user: { email, avatarURL, balance },
+    user: { email, avatarURL },
+    balance,
     token,
   });
 };

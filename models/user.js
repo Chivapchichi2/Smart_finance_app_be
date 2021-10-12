@@ -10,7 +10,7 @@ const userSchema = new Schema(
   {
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: [true, 'Email is required'],
       minlength: 6,
     },
     email: {
@@ -64,7 +64,7 @@ userSchema.methods.comparePassword = function (password) {
 //checked input data from frontend
 const userJoiSchema = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(6),
   token: Joi.string(),
   verify: Joi.boolean(),
   avatarURL: Joi.string(),

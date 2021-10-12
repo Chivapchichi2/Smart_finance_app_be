@@ -1,6 +1,8 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerDocument = require('./swagger/swagger.json')
+const swaggerUI = require('swagger-ui-express');
 
 const app = express();
 
@@ -10,6 +12,10 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 
 app.use('/api/users', require('./route/api/auth'));
 app.use('/api/ledgers', require('./route/api/ledger'));
