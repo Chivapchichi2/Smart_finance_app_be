@@ -33,4 +33,6 @@ router.patch(
   tryCatchWrapper(ctrl.updateUserBalance),
 );
 
+router.post('/google', tryCatchWrapper(ctrl.googleAuth));
+
 module.exports = router;

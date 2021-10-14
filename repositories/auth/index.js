@@ -1,15 +1,13 @@
-const gravatar = require('gravatar');
-
 const { User } = require('../../models');
 
 const findByEmail = async email => await User.findOne({ email });
 
 const findByToken = async token => await User.findOne({ token });
 
-const create = async (email, password) => {
+const create = async (email, password = '', avatarURL = '') => {
   const newUser = new User({ email });
   newUser.setPassword(password);
-  newUser.avatarURL = gravatar.url(email, { protocol: 'http' });
+  newUser.avatarURL = avatarURL;
   return await newUser.save();
 };
 

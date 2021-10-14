@@ -9,10 +9,11 @@ const current = async (req, res) => {
     throw new Unauthorized('Not authorized');
   }
 
-  const user = { email, avatarURL, balance };
+  const user = { email, avatarURL };
 
   res.json({
     user,
+    balance,
   });
 };
 
