@@ -2,8 +2,6 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 
-const reportSchema = require('./report');
-
 //regular for email check
 const emailRegExp =
   /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?.)*(aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/;
@@ -33,12 +31,12 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
-    expense: {
-      type: reportSchema,
+    incomes: {
+      type: Schema.Types.Mixed,
       default: {},
     },
-    income: {
-      type: reportSchema,
+    expense: {
+      type: Schema.Types.Mixed,
       default: {},
     },
   },
