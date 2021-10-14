@@ -12,7 +12,7 @@ const getTransactionsByMonth = async (req, res) => {
   );
 
   //check response and return false data
-  if (monthTransactions.length === 0) return res.json(null);
+  if (monthTransactions.length === 0) return res.json([]);
 
   //return array of month transactions
   res.json(monthTransactions);
