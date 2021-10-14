@@ -7,10 +7,7 @@ const {
   updateIncome,
   updateExpense,
 } = require('../../repositories/auth');
-const {
-  updateIncomeReport,
-  updateExpenseReport,
-} = require('../../helpers/updateReport');
+const { updateLedgerReport } = require('../../helpers/updateReport');
 
 const addTransaction = async (req, res) => {
   const { value } = req.body;
@@ -45,8 +42,8 @@ const addTransaction = async (req, res) => {
   const lastExpense = req.user.expense;
 
   const reports = expense
-    ? updateExpenseReport(year, month, value, lastExpense)
-    : updateIncomeReport(year, month, value, lastIncome);
+    ? updateLedgerReport(year, month, value, lastExpense)
+    : updateLedgerReport(year, month, value, lastIncome);
   
   //send new income reports to user
   const todo = expense
@@ -61,7 +58,6 @@ const addTransaction = async (req, res) => {
       category: transaction.category,
       value: transaction.value,
       _id: transaction._id,
-      map: reports,
     },
     balance: newBalance,
     ledger: {

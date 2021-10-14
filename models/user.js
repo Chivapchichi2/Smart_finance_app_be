@@ -39,14 +39,6 @@ const userSchema = new Schema(
       type: Schema.Types.Mixed,
       default: {},
     },
-    handleExpense: {
-      type: Map,
-      of: String,
-    },
-    handleIncomes: {
-      type: Map,
-      of: String,
-    },
   },
   { versionKey: false, timestamps: true },
 );
@@ -73,13 +65,7 @@ const userJoiSchema = Joi.object({
 
 const User = model('user', userSchema);
 
-const reportsMap = new User({
-  handleIncomes: {},
-  handleExpense: {},
-});
-
 module.exports = {
   User,
   userJoiSchema,
-  reportsMap,
 };

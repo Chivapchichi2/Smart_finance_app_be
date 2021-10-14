@@ -2,10 +2,7 @@ const { NotFound } = require('http-errors');
 
 const { remove } = require('../../repositories/ledger');
 const { updateBalance, updateExpense, updateIncome } = require('../../repositories/auth');
-const {
-  updateAfterRemoveExpenseReport,
-  updateAfterRemoveIncomeReport,
-} = require('../../helpers/updateReport');
+const { updateReportsAfterRemove } = require('../../helpers/updateReport');
 
 const removeTransaction = async (req, res) => {
   //remove transaction and get value, expense
@@ -31,8 +28,8 @@ const removeTransaction = async (req, res) => {
   const lastExpense = req.user.expense;
 
   const reports = expense
-    ? updateAfterRemoveExpenseReport(year, month, value, lastExpense)
-    : updateAfterRemoveIncomeReport(year, month, value, lastIncome);
+    ? updateReportsAfterRemove(year, month, value, lastExpense)
+    : updateReportsAfterRemove(year, month, value, lastIncome);
 
   //send new income reports to user
   const todo = expense
