@@ -16,12 +16,6 @@ const addTransaction = async (req, res) => {
   //to know expense or income
   const expense = req.route.path === '/expense' ? true : false;
 
-  //create transaction
-  const transaction = await add(_id, {
-    ...req.body,
-    expense,
-  });
-
   //change user balance
   const newBalance = expense ? balance - value : balance + value;
 
@@ -29,6 +23,13 @@ const addTransaction = async (req, res) => {
   if (newBalance < 0) {
     throw new BadRequest(Messages.negativeBalance);
   }
+  
+  console.log('не добавляет')
+  //create transaction
+  const transaction = await add(_id, {
+    ...req.body,
+    expense,
+  });
 
   //update user balance
   await updateBalance(_id, newBalance);
