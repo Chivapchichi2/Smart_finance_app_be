@@ -38,6 +38,7 @@ const ledgerSchema = Schema(
     },
     value: {
       type: Number,
+      min: 0.01,
       require: [true, RequirementRules.value],
     },
     expense: {
@@ -53,7 +54,7 @@ const ledgerJoiSchema = Joi.object({
   monthDate: Joi.string(),
   description: Joi.string().required(),
   category: Joi.string().required(),
-  value: Joi.number().required(),
+  value: Joi.number().min(0.01).required(),
   expense: Joi.boolean().default(true),
 });
 
