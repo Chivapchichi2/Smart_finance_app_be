@@ -63,9 +63,14 @@ const userJoiSchema = Joi.object({
   balance: Joi.number(),
 });
 
+const patchBalanceJoiSchema = Joi.object({
+  value: Joi.number().min(0),
+});
+
 const User = model('user', userSchema);
 
 module.exports = {
   User,
   userJoiSchema,
+  patchBalanceJoiSchema,
 };

@@ -1,8 +1,9 @@
-const { NotFound } = require('http-errors');
+const { NotFound, BadRequest } = require('http-errors');
 
 const { remove } = require('../../repositories/ledger');
 const { updateBalance, updateExpense, updateIncome } = require('../../repositories/auth');
 const { updateReportsAfterRemove } = require('../../helpers/updateReport');
+const { Messages } = require('../../helpers/constants');
 
 const removeTransaction = async (req, res) => {
   //remove transaction and get value, expense
@@ -11,13 +12,17 @@ const removeTransaction = async (req, res) => {
   const { _id, balance } = req.user;
 
   //check value
-  if (!value) throw new NotFound('Transaction not found');
+  if (!value) { throw new NotFound('Transaction not found') };
 
   //change user balance
   const newBalance = expense ? balance + value : balance - value;
 
   //update user balance
-  await updateBalance(_id, newBalance);
+  if (newBalance > 0) {
+    await updateBalance(_id, newBalance);
+  } else {
+    throw new BadRequest(Messages.negativeBalance);
+  }
 //------------------------------------------------
   //defined year and month from request
   const month = date.split('.')[1];
