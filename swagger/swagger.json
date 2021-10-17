@@ -155,7 +155,7 @@
      "/api/users/balance": {
       "patch": {
         "tags": ["User"],
-        "summary": "Get current user balance",
+        "summary": "Update current user balance",
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "requestBody":{
@@ -333,6 +333,10 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Эта затрата сделает ваш баланс отрицательным. Пополните баланс внесением доходов, либо откоректируйте значение баланса вручную",
+            "content": {}
           }
         }
       }
@@ -419,11 +423,6 @@
               "avatarURL": {
                 "type": "string",
                 "description": "User's avatar"
-              },
-               "balance": {
-                "type": "number",
-                "description": "User's balance",
-                "example": 0
               }
             }
           },
@@ -431,6 +430,11 @@
             "type": "string",
             "description": "Access token for requests",
             "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
+          },
+           "balance": {
+            "type": "number",
+            "description": "User's balance",
+            "example": 0
           }
         }
       },
@@ -466,11 +470,6 @@
               "avatarURL": {
                 "type": "string",
                 "description": "User's avatar"
-              },
-               "balance": {
-                "type": "Number",
-                "description": "User's balance",
-                "example": 0
               }
             }
           },
@@ -478,7 +477,12 @@
             "type": "string",
             "description": "Access token for requests",
             "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          }
+          },
+          "balance": {
+                "type": "Number",
+                "description": "User's balance",
+                "example": 0
+              }
         }
       },
        "CurrentUserRequest": {
@@ -506,11 +510,46 @@
               "avatarURL": {
                 "type": "string",
                 "description": "User's avatar"
-              },
-               "balance": {
+              }
+            }
+          },
+          "balance": {
                 "type": "Number",
                 "description": "User's balance",
                 "example": 0
+              },
+          "ledger": {
+            "type": "object",
+            "properties":{
+              "incomes": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "130"
+                       }
+                     }
+                   }
+                 }
+              },
+              "expenses": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "50"
+                       }
+                     }
+                   }
+                 }
               }
             }
           }
@@ -615,6 +654,41 @@
             "type": "Number",
             "description": "User's balance",
             "example": 25000
+          },
+           "ledger": {
+            "type": "object",
+            "properties":{
+              "incomes": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "130"
+                       }
+                     }
+                   }
+                 }
+              },
+              "expenses": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "50"
+                       }
+                     }
+                   }
+                 }
+              }
+            }
           }
         }
       },
@@ -691,6 +765,41 @@
             "type": "Number",
             "description": "User's balance",
             "example": 25000
+          },
+          "ledger": {
+            "type": "object",
+            "properties":{
+              "incomes": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "130"
+                       }
+                     }
+                   }
+                 }
+              },
+              "expenses": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "50"
+                       }
+                     }
+                   }
+                 }
+              }
+            }
           }
         }
       },
@@ -713,9 +822,6 @@
       "DeleteTransactionResponse": {
         "type": "object",
         "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
                "message": {
                 "type": "string",
                 "description": "message",
@@ -725,9 +831,42 @@
                 "type": "number",
                 "description": "User's balance",
                 "example": 25000
+              },
+              "ledger": {
+            "type": "object",
+            "properties":{
+              "incomes": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "130"
+                       }
+                     }
+                   }
+                 }
+              },
+              "expenses": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "50"
+                       }
+                     }
+                   }
+                 }
               }
             }
-          }    
+          }  
         }
       },
         "GetIncomeByMonthRequest": {
