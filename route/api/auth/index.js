@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { userJoiSchema } = require('../../../models/user');
+const {
+  userJoiSchema,
+  patchBalanceJoiSchema,
+} = require('../../../models/user');
 const {
   validation,
   tryCatchWrapper,
@@ -10,6 +13,7 @@ const {
 const ctrl = require('../../../controllers/auth');
 
 const userValidationMiddleware = validation(userJoiSchema);
+const balanceValidationMiddleware = validation(patchBalanceJoiSchema);
 
 router.post('/signup', userValidationMiddleware, tryCatchWrapper(ctrl.signup));
 
@@ -29,6 +33,7 @@ router.get(
 
 router.patch(
   '/balance',
+  balanceValidationMiddleware,
   tryCatchWrapper(authenticate),
   tryCatchWrapper(ctrl.updateUserBalance),
 );
