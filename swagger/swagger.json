@@ -118,7 +118,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -146,7 +146,7 @@
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "responses": {
-          "200": {
+          "204": {
             "description": "Logout success"
           }
         }
@@ -209,7 +209,7 @@
         }
         },
         "responses": {
-          "204": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -250,7 +250,7 @@
         }
         },
         "responses": {
-          "204": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -349,8 +349,8 @@
         "parameters": [
           {
             "in": "path",
-            "name": "id - Transaction's id",
-            "description": "Transaction's id",
+            "name": "id - Transaction id",
+            "description": "Transaction id",
             "required": true,
             "type": "string"
           }
