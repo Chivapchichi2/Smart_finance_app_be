@@ -15,13 +15,20 @@ const signup = async (req, res) => {
   //create new user in DB
   const newUser = await UserDB.create(email, password);
 
-  const { avatarURL, balance, token } = await createUserToken(newUser, UserDB);
+  const { avatarURL, balance, token, incomes, expense } = await createUserToken(
+    newUser,
+    UserDB,
+  );
 
   //send response to frontend
   res.status(201).json({
     user: { email, avatarURL },
     balance,
     token,
+    ledger: {
+      incomes,
+      expense,
+    },
   });
 };
 
