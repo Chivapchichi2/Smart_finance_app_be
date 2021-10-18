@@ -39,12 +39,19 @@ const googleAuth = async (req, res) => {
   //create new user in DB
   const newUser = await UserDB.create(email, sub, picture);
 
-  const { avatarURL, balance, token } = await createUserToken(newUser, UserDB);
+  const { avatarURL, balance, token, expense, incomes } = await createUserToken(
+    newUser,
+    UserDB,
+  );
 
   //send response to frontend
   res.status(201).json({
     user: { email, avatarURL, balance },
     token,
+    ledger: {
+      incomes,
+      expense,
+    },
   });
 };
 

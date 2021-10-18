@@ -13,13 +13,20 @@ const login = async (req, res) => {
   }
 
   //create User token
-  const { avatarURL, balance, token } = await createUserToken(user, UserDB);
+  const { avatarURL, balance, token, incomes, expense } = await createUserToken(
+    user,
+    UserDB,
+  );
 
   //send response to frontend
   res.json({
     user: { email, avatarURL },
     balance,
     token,
+    ledger: {
+      incomes,
+      expense,
+    },
   });
 };
 
