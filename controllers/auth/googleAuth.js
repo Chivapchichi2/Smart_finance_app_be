@@ -23,16 +23,18 @@ const googleAuth = async (req, res) => {
       throw new BadRequest('Use your email and password');
     }
     //create User token
-    const { avatarURL, balance, token } = await createUserToken(
-      existedUser,
-      UserDB,
-    );
+    const { avatarURL, balance, token, expense, incomes } =
+      await createUserToken(existedUser, UserDB);
 
     //send response to frontend
     return res.json({
       user: { email, avatarURL },
       balance,
       token,
+      ledger: {
+        incomes,
+        expense,
+      },
     });
   }
 
