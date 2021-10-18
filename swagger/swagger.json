@@ -435,6 +435,41 @@
             "type": "number",
             "description": "User's balance",
             "example": 0
+          },
+          "ledger": {
+            "type": "object",
+            "properties":{
+              "incomes": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "130"
+                       }
+                     }
+                   }
+                 }
+              },
+              "expenses": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "50"
+                       }
+                     }
+                   }
+                 }
+              }
+            }
           }
         }
       },
@@ -482,7 +517,42 @@
                 "type": "Number",
                 "description": "User's balance",
                 "example": 0
+              },
+          "ledger": {
+            "type": "object",
+            "properties":{
+              "incomes": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "130"
+                       }
+                     }
+                   }
+                 }
+              },
+              "expenses": {
+                 "type": "object",
+                 "properties":{
+                   "year":{
+                     "type": "object",
+                     "properties":{
+                       "month":{
+                         "type":"string",
+                         "description":"Month",
+                         "example": "50"
+                       }
+                     }
+                   }
+                 }
               }
+            }
+          }
         }
       },
        "CurrentUserRequest": {
