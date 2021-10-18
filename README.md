@@ -50,7 +50,7 @@ Status: 409 Conflict Content-Type: application/json ResponseBody: { "message":
 Status: 201 Created Content-Type: application/json ResponseBody: { { "data": {
 "email": "a@gmail.com", "avatarURL": "string" }, "token":
 "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM",
-"balance": 0 } }
+"balance": 0, ledger} }
 
 ## 4. SIGNIN request
 
@@ -69,7 +69,7 @@ Joi или другой библиотеки валидации>
 Status: 200 OK Content-Type: application/json ResponseBody: { { "data": {
 "email": "a@gmail.com", "avatarURL": "string" }, "token":
 "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM",
-"balance": 0 } }
+"balance": 0, ledger } }
 
 - Login auth error Status: 400 Bad Request ResponseBody: { "message": "Email or
   password is wrong" }
