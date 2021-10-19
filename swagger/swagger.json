@@ -107,15 +107,7 @@
         "security": [{ "Bearer": [] }],
         "parameters": [],
         "requestBody": {
-          "description": "Auth object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CurrentUserRequest"
-              }
-            }
-          }
+          "description": "Auth object"
         },
         "responses": {
           "200": {
@@ -193,21 +185,20 @@
         }
       }
     },
-    "/api/ledgers/income/:date(mm.yyyy)": {
+    "/api/ledgers/income/{date}": {
       "get": {
         "tags": ["Ledger"],
         "summary": "Get all income for month",
         "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "requestBody":{
-         "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/GetIncomeByMonthRequest"
-            }
+        "parameters": [
+          {
+            "in": "path",
+            "name": "date",
+            "description": "Month Date",
+            "required": true,
+            "type": "number"
           }
-        }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -234,21 +225,20 @@
         }
       }
     },
-     "/api/ledgers/expense/:date(mm.yyyy)": {
+     "/api/ledgers/expense/{date}": {
       "get": {
         "tags": ["Ledger"],
         "summary": "Get all expence for month",
         "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "requestBody":{
-         "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/GetExpenseByMonthRequest"
-            }
+        "parameters": [
+          {
+            "in": "path",
+            "name": "date",
+            "description": "Month Date",
+            "required": true,
+            "type": "number"
           }
-        }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -341,7 +331,7 @@
         }
       }
     },
-    "/api/ledgers/:id": {
+    "/api/ledgers/{id}": {
       "delete": {
         "tags": ["Ledger"],
         "summary": "Delete transaction",
@@ -349,24 +339,13 @@
         "parameters": [
           {
             "in": "path",
-            "name": "id - Transaction id",
+            "name": "id",
             "description": "Transaction id",
             "required": true,
-            "type": "string"
+            "type": "integar"
           }
         ],
         "required": true,
-         "requestBody":{
-           "description": "Object delete",
-           "required": true,
-           "content": {
-             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteTransactionRequest"
-              }
-            }
-          }
-         },
         "responses": {
           "200": {
             "description": "Successful",
@@ -411,7 +390,7 @@
       "SignupResponse": {
         "type": "object",
         "properties": {
-          "data": {
+          "user": {
             "type": "object",
             "properties": {
               "email": {
@@ -493,7 +472,7 @@
         "type": "object",
         "properties": {
           
-          "data": {
+          "user": {
             "type": "object",
             "properties": {
               "email": {
@@ -555,20 +534,11 @@
           }
         }
       },
-       "CurrentUserRequest": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "Access token for requests",
-            "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          }
-        }
-      },
+      
        "CurrentUserResponse": {
         "type": "object",
         "properties": {
-          "User": {
+          "user": {
             "type": "object",
             "properties": {
               "email": {
@@ -629,11 +599,6 @@
         "required": ["value"],
         "type": "object",
         "properties": {
-          "token": {
-            "type": "string",
-            "description": "Access token for requests",
-            "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          },
            "value": {
             "type": "Number",
             "description": "User's value",
@@ -655,14 +620,6 @@
         "required": ["date", "category","description", "value"],
         "type": "object",
         "properties": {
-          "token": {
-            "type": "string",
-            "description": "Access token for requests",
-            "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
               "date": {
                 "type": "string",
                 "description": "Date",
@@ -684,9 +641,7 @@
                 "example": 100
               }
             }
-          }
-        }
-      },
+          },
       "AddUserIncomeResponse": {
         "type": "object",
         "properties": {
@@ -766,14 +721,6 @@
         "required": ["date", "category","description", "value"],
         "type": "object",
         "properties": {
-          "token": {
-            "type": "string",
-            "description": "Access token for requests",
-            "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
               "date": {
                 "type": "string",
                 "description": "Date",
@@ -795,8 +742,6 @@
                 "example": 100
               }
             }
-          }
-        }
       },
       "AddUserExpenseResponse": {
         "type": "object",
@@ -873,22 +818,6 @@
           }
         }
       },
-      "DeleteTransactionRequest": {
-        "required": ["_id"],
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "Access token for requests",
-            "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          },
-          "_id": {
-            "type": "string",
-            "description": "User's id",
-            "example": "1034f43b4543r0"
-          }
-        }
-      },
       "DeleteTransactionResponse": {
         "type": "object",
         "properties": {
@@ -939,29 +868,13 @@
           }  
         }
       },
-        "GetIncomeByMonthRequest": {
-        "type": "object",
-        "required": ["MonthDate"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "Access token for requests",
-            "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          },
-          "MonthDate": {
-                "type": "string",
-                "description": "Date",
-                "example": "09.2021"
-              }
-         }
-       },
        "GetIncomeByMonthResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
               "_id": {
-                "type": "string",
+                "type": "integer",
                 "description": "User's id",
                 "example": "614a30b6a45e9001b4bc7d6e"
               },
@@ -1004,29 +917,13 @@
         },
         "example":[{"_id":"614a30b6a45e9001b4bc7d6e","owner":"614a30b6a45e9001b4bc7d6e","date":"27.09.2021","MonthDate":"09.2021","description":"Описание любое","category":"ЗП","value":100,"expense":false},{"_id":"614a30b6a45e9001b4bc7d6e","owner":"614a30b6a45e9001b4bc7d6e","date":"27.09.2021","MonthDate":"09.2021","description":"Описание любое","category":"Доп доход","value":500,"expense":false}]
       },
-       "GetExpenseByMonthRequest": {
-        "type": "object",
-        "required": ["MonthDate"],
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "Access token for requests",
-            "example": "eeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNDlhMjJjMWMxOGZkNTM1Yzk3NDVjOCIsImlhdCI6MTYzMjI0ODg3Mn0.hnm3qyuHVl913NARFUEqVlKaSJRBfE6rcwOFZ5nOglM"
-          },
-          "MonthDate": {
-                "type": "string",
-                "description": "Date",
-                "example": "09.2021"
-              }
-         }
-       },
       "GetExpenseByMonthResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
               "_id": {
-                "type": "string",
+                "type": "integer",
                 "description": "User's id",
                 "example": "614a30b6a45e9001b4bc7d6e"
               },
